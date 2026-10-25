@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="576pt" viewBox="0 0 864 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Parametric component reference drawing</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 576
+L 864 576
+L 864 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 181.581919 371.59569
+L 397.298081 332.766781
+L 397.298081 324.138134
+L 181.581919 361.385125
+z
+" clip-path="url(#padfb92f911)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 181.581919 129.562155
+L 397.298081 168.391064
+L 397.298081 177.019711
+L 181.581919 139.77272
+z
+" clip-path="url(#padfb92f911)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 167.200841 250.578922
+L 411.679159 250.578922
+" clip-path="url(#padfb92f911)" style="fill: none; stroke-dasharray: 5.12,1.28,0.8,1.28; stroke-dashoffset: 0; stroke: #71818b; stroke-width: 0.8"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 394.070263 400.357845
+Q 289.440531 400.357845 184.810798 400.357845
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 390.070263 398.357845
+L 394.070263 400.357845
+L 390.070263 402.357845
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 188.810798 402.357845
+L 184.810798 400.357845
+L 188.810798 398.357845
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b65a20" x="289.44" y="393.278157" transform="rotate(-0 289.44 393.278157)">L = 150</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 149.943548 132.78998
+Q 149.943548 250.576181 149.943548 368.362382
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 147.943548 136.78998
+L 149.943548 132.78998
+L 151.943548 136.78998
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 151.943548 364.362382
+L 149.943548 368.362382
+L 147.943548 364.362382
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_2">
+    <g id="patch_6">
+     <path d="M 156.28261 284.728141
+L 156.28261 216.429704
+L 143.604485 216.429704
+L 143.604485 284.728141
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #b65a20" transform="translate(152.702923 283.228141) rotate(-90)">OD1 = 168.3</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 428.936452 171.619917
+Q 428.936452 250.579928 428.936452 329.53994
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 426.936452 175.619917
+L 428.936452 171.619917
+L 430.936452 175.619917
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 430.936452 325.53994
+L 428.936452 329.53994
+L 426.936452 325.53994
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <g id="patch_8">
+     <path d="M 435.275515 284.728141
+L 435.275515 216.429704
+L 422.59739 216.429704
+L 422.59739 284.728141
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #b65a20" transform="translate(431.695827 283.228141) rotate(-90)">OD2 = 114.3</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="289.44" y="88.8" transform="rotate(-0 289.44 88.8)">Axial section / X to the right</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_9">
+    <path d="M 704.16 349.10631
+C 727.073548 349.10631 749.051701 340.002661 765.254026 323.800336
+C 781.456351 307.598011 790.56 285.619858 790.56 262.70631
+C 790.56 239.792762 781.456351 217.814609 765.254026 201.612284
+C 749.051701 185.409959 727.073548 176.30631 704.16 176.30631
+C 681.246452 176.30631 659.268299 185.409959 643.065974 201.612284
+C 626.863649 217.814609 617.76 239.792762 617.76 262.70631
+C 617.76 285.619858 626.863649 307.598011 643.065974 323.800336
+C 659.268299 340.002661 681.246452 349.10631 704.16 349.10631
+z
+" clip-path="url(#p64f6b34c4a)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 704.16 341.816471
+C 725.14026 341.816471 745.264047 333.480925 760.099331 318.645641
+C 774.934615 303.810357 783.27016 283.68657 783.27016 262.70631
+C 783.27016 241.72605 774.934615 221.602263 760.099331 206.766979
+C 745.264047 191.931695 725.14026 183.59615 704.16 183.59615
+C 683.17974 183.59615 663.055953 191.931695 648.220669 206.766979
+C 633.385385 221.602263 625.04984 241.72605 625.04984 262.70631
+C 625.04984 283.68657 633.385385 303.810357 648.220669 318.645641
+C 663.055953 333.480925 683.17974 341.816471 704.16 341.816471
+z
+" clip-path="url(#p64f6b34c4a)" style="fill: #ffffff; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #153e4a" x="704.16" y="265.465685" transform="rotate(-0 704.16 265.465685)">ID1 = 154.1</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 787.328893 369.64107
+Q 704.158836 369.64107 620.988779 369.64107
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 783.328893 367.64107
+L 787.328893 369.64107
+L 783.328893 371.64107
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 624.988779 371.64107
+L 620.988779 369.64107
+L 624.988779 367.64107
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b65a20" x="704.16" y="362.561382" transform="rotate(-0 704.16 362.561382)">OD1 = 168.3</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="704.16" y="139.504171" transform="rotate(-0 704.16 139.504171)">Large-end face</text>
+   </g>
+  </g>
+  <g id="text_8">
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="34.56" transform="rotate(-0 47.52 34.56)">Concentric reducer</text>
+  </g>
+  <g id="text_9">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="60.48" transform="rotate(-0 47.52 60.48)">AT_REDUCER  |  DEFAULT DIMENSIONS IN mm</text>
+  </g>
+  <g id="text_10">
+   <g id="patch_12">
+    <path d="M 38.5 483.933594
+L 475.084844 483.933594
+L 475.084844 454.893594
+L 38.5 454.893594
+z
+" style="fill: #edf5f5"/>
+   </g>
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="472.32" transform="rotate(-0 47.52 472.32)">OD1 = 168.3   |   OD2 = 114.3   |   ID1 = 154.1   |   ID2 = 102.3   |   L = 150</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="512.64" transform="rotate(-0 47.52 512.64)">Straight conical walls with independently specified end bores; no weld bevels.</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="550.08" transform="rotate(-0 47.52 550.08)">REFERENCE ILLUSTRATION  |  Not a Plant 3D render or a manufacturing drawing.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="padfb92f911">
+   <rect x="116.86707" y="100.8" width="345.145861" height="328.32"/>
+  </clipPath>
+  <clipPath id="p64f6b34c4a">
+   <rect x="587.52" y="145.504171" width="233.28" height="244.671658"/>
+  </clipPath>
+ </defs>
+</svg>

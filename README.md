@@ -1,51 +1,61 @@
 # AutoCAD Plant 3D Parametric Components
 
-A small, editable Python starter library for learning custom Plant 3D component geometry.
+Eight editable Python examples, with dimensioned PNG and SVG reference images. All dimensions are in **millimetres**. The library includes a **flat strap U-band with drilled mounting feet** and a separate round U-bolt body.
 
-**Start with `AT_CYLINDER`, then try `AT_SPACER` and `AT_FLANGE`.** All dimensions are in millimetres. The scripts include parameter validation, explicit reference points, and comments explaining the geometry.
+![Flat strap U-band reference drawing](images/AT_UBAND.png)
 
-## Components
+These are source examples with geometric input checks. Plant 3D registration, solids, catalog integration, connections and isometrics still need validation in your installation. The drawings are analytical illustrations, not Plant 3D screenshots or fabrication drawings; no JIS/ASME dimensions or load/pressure rating is implied.
 
-| Script | Creates | Main parameters |
-| --- | --- | --- |
-| [AT_CYLINDER.py](CustomScripts/AT_CYLINDER.py) | Solid cylinder along X, with one reference anchor | Diameter, length |
-| [AT_SPACER.py](CustomScripts/AT_SPACER.py) | Hollow cylindrical spacer, with two reference ports | Outside diameter, bore, length |
-| [AT_FLANGE.py](CustomScripts/AT_FLANGE.py) | Flat ring with 4, 8, 12, or 16 bolt holes | Outside diameter, bore, thickness, bolt circle, hole diameter, hole count |
+## Choose a component
 
-The flange validates the bore, edge clearances, and separation between neighboring holes before creating a solid. Dimensions are illustrative: these files do not contain JIS/ASME tables, pressure ratings, or finished catalog/spec data.
+| Component | Python source | Reference image | Main adjustable dimensions |
+| --- | --- | --- | --- |
+| Flat strap U-band | [AT_UBAND.py](CustomScripts/AT_UBAND.py) | [PNG](images/AT_UBAND.png) / [SVG](images/AT_UBAND.svg) | Pipe OD, clearance, width, thickness, leg depth, foot projection, mounting holes |
+| Round U-bolt body | [AT_UBOLT.py](CustomScripts/AT_UBOLT.py) | [PNG](images/AT_UBOLT.png) / [SVG](images/AT_UBOLT.svg) | Pipe OD, clearance, rod diameter, leg depth |
+| Drilled flat flange | [AT_FLANGE.py](CustomScripts/AT_FLANGE.py) | [PNG](images/AT_FLANGE.png) / [SVG](images/AT_FLANGE.svg) | Outside diameter, bore, thickness, bolt circle, holes |
+| Blind flange plate | [AT_BLIND_FLANGE.py](CustomScripts/AT_BLIND_FLANGE.py) | [PNG](images/AT_BLIND_FLANGE.png) / [SVG](images/AT_BLIND_FLANGE.svg) | Outside diameter, thickness, bolt circle, holes |
+| Concentric reducer | [AT_REDUCER.py](CustomScripts/AT_REDUCER.py) | [PNG](images/AT_REDUCER.png) / [SVG](images/AT_REDUCER.svg) | Outside and bore diameters at both ends, length |
+| Hollow 90-degree elbow | [AT_ELBOW90.py](CustomScripts/AT_ELBOW90.py) | [PNG](images/AT_ELBOW90.png) / [SVG](images/AT_ELBOW90.svg) | Outside diameter, bore, bend radius |
+| Hollow spacer | [AT_SPACER.py](CustomScripts/AT_SPACER.py) | [PNG](images/AT_SPACER.png) / [SVG](images/AT_SPACER.svg) | Outside diameter, bore, length |
+| Solid cylinder | [AT_CYLINDER.py](CustomScripts/AT_CYLINDER.py) | [PNG](images/AT_CYLINDER.png) / [SVG](images/AT_CYLINDER.svg) | Diameter, length |
 
-## First step in Plant 3D
+[Browse all eight image sheets](docs/GALLERY.md) or open the [overview image](images/component-gallery.jpg).
 
-Copy the three `.py` files from `CustomScripts` to your configured shared-content folder's `CPak Common\CustomScripts` directory. Follow [installation and testing](docs/INSTALLATION.md) to register the scripts and run the first cylinder example.
+## Start with the U-band
 
-The `varmain` imports are supplied by Plant 3D. Do not install a similarly named Python package or run a component file with ordinary Python to generate CAD geometry.
+Copy the eight `.py` files from `CustomScripts` into your configured shared-content folder's `CPak Common\CustomScripts` directory, then follow [installation and testing](docs/INSTALLATION.md). Once registered, test in a scratch drawing:
 
-## Read and change the examples
-
-- [Parameter reference](docs/COMPONENTS.md): dimensions, axes, ports, and geometric constraints.
-- [Plant 3D commands](examples/plant3d-test-commands.lsp): paste one example at a time into a scratch drawing.
-- [Validation record](docs/VALIDATION.md): what has been checked and what needs a Plant 3D session.
-
-Each script is self-contained. Its filename and entry-point function must match. Edit defaults to experiment, or supply dimensions through `testacpscript` and later through catalog size rows.
-
-## Offline development checks
-
-From the repository folder, using Python 3.10 or later:
-
-```powershell
-python -m unittest discover -s tests -v
+```lisp
+(arxload "PnP3dACPAdapter")
+(testacpscript "AT_UBAND")
 ```
 
-The tests use a small recorder for calls to Autodesk's API. They check input validation, geometry arguments, hole placement, cleanup, and port directions. They **do not run Autodesk's solid modeler** or establish compatibility with any Plant 3D release. The same checks run in GitHub Actions.
+The default U-band fits around a 114.3 mm pipe with 1 mm radial clearance. It has a 30 mm wide, 6 mm thick strap, 75 mm centre-to-foot depth, 35 mm projecting feet and 11 mm mounting holes. Its leg-to-foot transitions are square; bend radii/allowances, bolts and load calculations are outside this example.
 
-## Current status
+The `varmain` imports come from Plant 3D. Ordinary Python cannot run the CAD geometry. Each component is self-contained; its filename and entry-point function must match.
 
-This is a starter source library. Plant 3D registration, solid generation, catalog insertion, pipe connection, and isometric/BOM behavior have not yet been tested in a Plant 3D installation. See the validation record before using the examples in a project.
+## Documentation
 
-## Autodesk references
+- [Component parameters and coordinates](docs/COMPONENTS.md).
+- [Commands for default, changed-size and invalid-input tests](examples/plant3d-test-commands.lsp).
+- [Validation record](docs/VALIDATION.md).
+- [Autodesk forum research and references](docs/FORUM_REFERENCES.md), including decompiled-script discussions and the Plant 3D 2026.2 reload changes.
 
-- [Custom Python Scripts, Part 2](https://blog.autodesk.io/custom-python-scripts-for-autocad-plant-3d-part-2/): metadata and matching script names.
-- [Custom Python Scripts, Part 3](https://blog.autodesk.io/custom-python-scripts-for-autocad-plant-3d-part-3/): Boolean operations, registration, and testing.
-- [Plant 3D 2026 registration command](https://help.autodesk.com/cloudhelp/2026/ENU/Plant3D-CatalogBuilder/files/GUID-D86E0252-5123-41DA-8B72-202AD8D48558.htm): adding scripts to the shape library.
+## Offline checks and image regeneration
 
-The implementations are original learning examples based on documented APIs. Autodesk libraries are not distributed with this repository.
+Using Python 3.10 or later from the repository folder:
+
+```powershell
+python -B -m unittest discover -s tests -v
+```
+
+The tests record primitive calls and check dimensions, hole/foot clearances, reference points, temporary-object cleanup and image/source consistency. They do not simulate Autodesk's solid kernel. GitHub Actions runs the checks on Python 3.10, 3.11, 3.13 and 3.14.
+
+The preview generator reads defaults from the actual source files. To regenerate the reference sheets after changing those defaults:
+
+```powershell
+python -m pip install -r tools/requirements-previews.txt
+python tools/render_previews.py
+```
+
+Only image generation needs these optional packages; component scripts and offline tests do not. PNG/SVG images are documentation assets, not automatically registered Spec Editor thumbnails.

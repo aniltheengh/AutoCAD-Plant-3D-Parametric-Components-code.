@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="576pt" viewBox="0 0 864 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Parametric component reference drawing</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 576
+L 864 576
+L 864 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 400.358919 349.258378
+C 400.358919 297.503389 379.7774 247.815208 343.181096 211.218904
+C 306.584792 174.6226 256.896611 154.041081 205.141622 154.041081
+L 205.141622 260.523243
+C 228.666617 260.523243 251.252154 269.878479 267.886837 286.513163
+C 284.521521 303.147846 293.876757 325.733383 293.876757 349.258378
+z
+" clip-path="url(#p5de30245d3)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 299.466372 349.258378
+C 299.466372 324.251494 289.52183 300.243246 271.839292 282.560708
+C 254.156754 264.87817 230.148506 254.933628 205.141622 254.933628
+" clip-path="url(#p5de30245d3)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #71818b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 394.769304 349.258378
+C 394.769304 298.985278 374.777092 250.719808 339.228642 215.171358
+C 303.680192 179.622908 255.414722 159.630696 205.141622 159.630696
+" clip-path="url(#p5de30245d3)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #71818b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 347.117838 349.258378
+C 347.117838 311.618386 332.149461 275.481527 305.533967 248.866033
+C 278.918473 222.250539 242.781614 207.282162 205.141622 207.282162
+" clip-path="url(#p5de30245d3)" style="fill: none; stroke-dasharray: 5.12,1.28,0.8,1.28; stroke-dashoffset: 0; stroke: #71818b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 251.665252 288.777376
+Q 277.795722 269.417305 303.027855 250.722812
+" style="fill: none; stroke: #b65a20; stroke-linecap: round"/>
+    <path d="M 298.623251 251.497061
+L 303.027855 250.722812
+L 301.004492 254.711045
+" style="fill: none; stroke: #b65a20; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #b65a20" x="212.240432" y="299.566703" transform="rotate(-0 212.240432 299.566703)">BR = 152.4</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 190.769141 128.145947
+Q 197.776866 166.731131 204.584805 204.216276
+" style="fill: none; stroke: #153e4a; stroke-linecap: round"/>
+    <path d="M 205.837839 199.92327
+L 204.584805 204.216276
+L 201.90222 200.638045
+" style="fill: none; stroke: #153e4a; stroke-linecap: round"/>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #153e4a" x="189.169297" y="122.096432" transform="rotate(-0 189.169297 122.096432)">P1 / origin</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 328.730041 391.072924
+Q 337.521594 371.0806 345.863089 352.111724
+" style="fill: none; stroke: #153e4a; stroke-linecap: round"/>
+    <path d="M 342.422112 354.968238
+L 345.863089 352.111724
+L 346.083714 356.578415
+" style="fill: none; stroke: #153e4a; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="318.722595" y="402.499459" transform="rotate(-0 318.722595 402.499459)">P2</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="289.44" y="88.8" transform="rotate(-0 289.44 88.8)">Plan view / bend from +X toward -Y</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_9">
+    <path d="M 704.16 344.443625
+C 726.423315 344.443625 747.77778 335.598316 763.520321 319.855774
+C 779.262863 304.113233 788.108171 282.758768 788.108171 260.495453
+C 788.108171 238.232138 779.262863 216.877673 763.520321 201.135132
+C 747.77778 185.392591 726.423315 176.547282 704.16 176.547282
+C 681.896685 176.547282 660.54222 185.392591 644.799679 201.135132
+C 629.057137 216.877673 620.211829 238.232138 620.211829 260.495453
+C 620.211829 282.758768 629.057137 304.113233 644.799679 319.855774
+C 660.54222 335.598316 681.896685 344.443625 704.16 344.443625
+z
+" clip-path="url(#pde04b5fa83)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 704.16 335.630168
+C 724.085959 335.630168 743.198486 327.713501 757.288267 313.62372
+C 771.378048 299.533939 779.294715 280.421412 779.294715 260.495453
+C 779.294715 240.569494 771.378048 221.456967 757.288267 207.367186
+C 743.198486 193.277405 724.085959 185.360738 704.16 185.360738
+C 684.234041 185.360738 665.121514 193.277405 651.031733 207.367186
+C 636.941952 221.456967 629.025285 240.569494 629.025285 260.495453
+C 629.025285 280.421412 636.941952 299.533939 651.031733 313.62372
+C 665.121514 327.713501 684.234041 335.630168 704.16 335.630168
+z
+" clip-path="url(#pde04b5fa83)" style="fill: #ffffff; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #153e4a" x="704.16" y="263.254828" transform="rotate(-0 704.16 263.254828)">ID = 102.3</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 784.877494 373.821812
+Q 704.160735 373.821812 623.443975 373.821812
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 780.877494 371.821812
+L 784.877494 373.821812
+L 780.877494 375.821812
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 627.443975 375.821812
+L 623.443975 373.821812
+L 627.443975 371.821812
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b65a20" x="704.16" y="366.742125" transform="rotate(-0 704.16 366.742125)">OD = 114.3</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="704.16" y="126.48" transform="rotate(-0 704.16 126.48)">End section / both ends equal</text>
+   </g>
+  </g>
+  <g id="text_8">
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="34.56" transform="rotate(-0 47.52 34.56)">Hollow 90-degree elbow</text>
+  </g>
+  <g id="text_9">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="60.48" transform="rotate(-0 47.52 60.48)">AT_ELBOW90  |  DEFAULT DIMENSIONS IN mm</text>
+  </g>
+  <g id="text_10">
+   <g id="patch_12">
+    <path d="M 38.5 483.933594
+L 293.038281 483.933594
+L 293.038281 454.893594
+L 38.5 454.893594
+z
+" style="fill: #edf5f5"/>
+   </g>
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="472.32" transform="rotate(-0 47.52 472.32)">OD = 114.3   |   ID = 102.3   |   BR = 152.4</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="512.64" transform="rotate(-0 47.52 512.64)">Quarter-torus bend. Dashed lines indicate the bore in plan view.</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="550.08" transform="rotate(-0 47.52 550.08)">REFERENCE ILLUSTRATION  |  Not a Plant 3D render or a manufacturing drawing.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p5de30245d3">
+   <rect x="135.928216" y="100.8" width="307.023568" height="328.32"/>
+  </clipPath>
+  <clipPath id="pde04b5fa83">
+   <rect x="590.829969" y="132.48" width="226.660063" height="270.72"/>
+  </clipPath>
+ </defs>
+</svg>

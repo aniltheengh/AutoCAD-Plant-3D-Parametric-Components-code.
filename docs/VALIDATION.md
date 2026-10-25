@@ -8,11 +8,13 @@ Environment: Windows, Python 3.14.3. Command:
 python -B -m unittest discover -s tests -v
 ```
 
-Result: **20 test methods passed**, including parameterized subcases.
+Expanded-library result: **38 test methods passed**, including parameterized subcases (35 geometry/metadata checks and 3 image/documentation checks).
 
-The checks execute the actual component source with a minimal call recorder in place of Plant 3D's modules. They cover source/entry-point consistency, dimension metadata, reference points, fractional dimensions, bore radii, hole patterns, cutter cleanup, and rejection of invalid dimensions before geometry is requested.
+The checks execute the actual eight component sources with a minimal call recorder in place of Plant 3D's modules. They cover source/entry-point consistency, dimension metadata, reference points, fractional dimensions, bore radii, hole patterns, cutter cleanup, and rejection of invalid dimensions before geometry is requested. Added checks cover U-band leg/foot placement and hole clearances, round U-bolt tangent alignment, reducer bore extrapolation, elbow reference directions and blind-flange geometry.
 
-The recorder does not construct solids. These results establish Python logic and expected API arguments only. The GitHub Actions workflow repeats the offline checks on Python 3.10 and 3.14; see [the live run history](https://github.com/aniltheengh/AutoCAD-Plant-3D-Parametric-Components-code./actions) for its current result.
+The recorder does not construct solids. These results establish Python logic and expected API arguments only. The GitHub Actions workflow repeats the offline checks on Python 3.10, 3.11, 3.13 and 3.14; see [the live run history](https://github.com/aniltheengh/AutoCAD-Plant-3D-Parametric-Components-code./actions) for its current result.
+
+Eight dimensioned PNG/SVG sheets and an overview image were generated from source defaults and visually inspected. Automated checks compare the preview manifest with source hashes/defaults, validate image file headers and resolve local documentation links. These images do not provide evidence of successful Plant 3D rendering.
 
 ## Plant 3D checks — not yet performed
 
@@ -20,7 +22,7 @@ No Plant 3D release is claimed as runtime-validated. Complete these checks in a 
 
 | Check | Current result |
 | --- | --- |
-| Register all three scripts with no errors | Not run |
+| Register all eight scripts with no errors | Not run |
 | Generate solids with defaults and the changed-size examples | Not run |
 | Measure diameters, lengths, bore openings, and bolt-hole placement | Not run |
 | Verify error reporting for the deliberately invalid examples | Not run |
@@ -28,7 +30,7 @@ No Plant 3D release is claimed as runtime-validated. Complete these checks in a 
 | Insert into a test spec/model and verify applicable connections | Not run |
 | Verify applicable isometric symbol and BOM properties | Not run |
 
-The solid cylinder has one reference anchor; the spacer and flange have two reference points. Catalog properties determine how those points are used in the intended part family.
+The cylinder and clamps have one support/reference anchor; the blind flange has one face reference. The spacer, drilled flange, reducer and elbow have two reference points. Catalog properties determine how those points are used in the intended part family.
 
 ## Record a runtime test here
 

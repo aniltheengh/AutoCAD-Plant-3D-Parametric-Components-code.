@@ -1,0 +1,93 @@
+{
+  "AT_UBAND": {
+    "defaults": {
+      "PD": 114.3,
+      "C": 1.0,
+      "W": 30.0,
+      "T": 6.0,
+      "H": 75.0,
+      "F": 35.0,
+      "HD": 11.0
+    },
+    "source_sha256": "440c6b91c2a2cf22ab31d36d7ff36927d99e41466aaa171e429cbad8ca2decc0",
+    "png": "AT_UBAND.png",
+    "svg": "AT_UBAND.svg"
+  },
+  "AT_UBOLT": {
+    "defaults": {
+      "PD": 114.3,
+      "C": 1.0,
+      "RD": 12.0,
+      "H": 100.0
+    },
+    "source_sha256": "08a7f915ab4bbfb1b2d975e4cd0963a9e0f2b643730e81971cee132819a9ab75",
+    "png": "AT_UBOLT.png",
+    "svg": "AT_UBOLT.svg"
+  },
+  "AT_CYLINDER": {
+    "defaults": {
+      "D": 100.0,
+      "L": 300.0
+    },
+    "source_sha256": "d006b7fbd01ab3214c4fbdd6a86fa77cc99aff3cddfd3887dab64d031aa19c85",
+    "png": "AT_CYLINDER.png",
+    "svg": "AT_CYLINDER.svg"
+  },
+  "AT_SPACER": {
+    "defaults": {
+      "OD": 114.3,
+      "ID": 102.3,
+      "L": 100.0
+    },
+    "source_sha256": "847a6c35a3c585af6aeb220e4caa03cb0f17c6b340a756fc774ccb63e00231f3",
+    "png": "AT_SPACER.png",
+    "svg": "AT_SPACER.svg"
+  },
+  "AT_FLANGE": {
+    "defaults": {
+      "OD": 180.0,
+      "ID": 90.0,
+      "T": 20.0,
+      "BCD": 140.0,
+      "HD": 18.0,
+      "N": 4
+    },
+    "source_sha256": "a4b633b7c711996e37823e1759d7fe012c89b4048e80b69eb02f50436fd9b283",
+    "png": "AT_FLANGE.png",
+    "svg": "AT_FLANGE.svg"
+  },
+  "AT_BLIND_FLANGE": {
+    "defaults": {
+      "OD": 180.0,
+      "T": 20.0,
+      "BCD": 140.0,
+      "HD": 18.0,
+      "N": 4
+    },
+    "source_sha256": "fe35e3b9e460056c236086cdd15eea601090d97671f99320668e818faa37fda2",
+    "png": "AT_BLIND_FLANGE.png",
+    "svg": "AT_BLIND_FLANGE.svg"
+  },
+  "AT_REDUCER": {
+    "defaults": {
+      "OD1": 168.3,
+      "OD2": 114.3,
+      "ID1": 154.1,
+      "ID2": 102.3,
+      "L": 150.0
+    },
+    "source_sha256": "4d02cd76a6e50b2f14300d1236e4de375b8d13cef300bc6a6eec5ce30d4fb50a",
+    "png": "AT_REDUCER.png",
+    "svg": "AT_REDUCER.svg"
+  },
+  "AT_ELBOW90": {
+    "defaults": {
+      "OD": 114.3,
+      "ID": 102.3,
+      "BR": 152.4
+    },
+    "source_sha256": "50b442f4388964039bdad2e5ec3a691cb92d8b29ebf5c1feb077b72c0bb19ad2",
+    "png": "AT_ELBOW90.png",
+    "svg": "AT_ELBOW90.svg"
+  }
+}

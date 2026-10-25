@@ -16,11 +16,14 @@ from unittest.mock import patch
 
 
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "CustomScripts"
+COMPONENT_NAMES = ("AT_CYLINDER", "AT_SPACER", "AT_FLANGE", "AT_BLIND_FLANGE",
+                   "AT_UBAND", "AT_UBOLT", "AT_REDUCER", "AT_ELBOW90")
 
 
 class SessionRecorder:
     def __init__(self):
         self.cylinders = []
+        self.objects = []
         self.ports = []
         self.events = []
 
@@ -28,19 +31,17 @@ class SessionRecorder:
         self.ports.append((tuple(position), tuple(direction)))
 
 
-class CylinderRecorder:
-    """A record of primitive arguments, not a simulated solid."""
+class PrimitiveRecorder:
+    """Record requests only; no topology, solid generation, or CAD validation."""
 
-    def __init__(self, session, R, H, O):
+    def __init__(self, session):
         self.session = session
-        self.radius = R
-        self.length = H
-        self.bore_radius = O
         self.origin = (0.0, 0.0, 0.0)
         self.axis = (0.0, 0.0, 1.0)
         self.cutters = []
+        self.joined = []
         self.erased = False
-        session.cylinders.append(self)
+        session.objects.append(self)
 
     def rotateY(self, degrees):
         radians = math.radians(degrees)
@@ -67,6 +68,36 @@ class CylinderRecorder:
         self.erased = True
         self.session.events.append(("erase", self))
 
+    def uniteWith(self, other):
+        self.joined.append(other)
+        self.session.events.append(("unite", self, other))
+        return self
+
+
+class CylinderRecorder(PrimitiveRecorder):
+    def __init__(self, session, R, H, O):
+        super().__init__(session)
+        self.radius, self.length, self.bore_radius = R, H, O
+        session.cylinders.append(self)
+
+
+class BoxRecorder(PrimitiveRecorder):
+    def __init__(self, session, L, W, H):
+        super().__init__(session)
+        self.spans = (H, L, W)
+
+
+class TorusRecorder(PrimitiveRecorder):
+    def __init__(self, session, R1, R2):
+        super().__init__(session)
+        self.bend_radius, self.tube_radius = R1, R2
+
+
+class ConeRecorder(PrimitiveRecorder):
+    def __init__(self, session, R1, R2, H, E):
+        super().__init__(session)
+        self.radii, self.length, self.eccentricity = (R1, R2), H, E
+
 
 def load_component(name):
     """Execute one real source file with isolated recording API replacements."""
@@ -74,8 +105,11 @@ def load_component(name):
     package.__path__ = []
     primitives = types.ModuleType("varmain.primitiv")
     primitives.CYLINDER = CylinderRecorder
+    primitives.BOX = BoxRecorder
+    primitives.TORUS = TorusRecorder
+    primitives.CONE = ConeRecorder
     custom = types.ModuleType("varmain.custom")
-    custom.LENGTH, custom.ENUM = "LENGTH", "ENUM"
+    custom.LENGTH, custom.LENGTH0, custom.ENUM = "LENGTH", "LENGTH0", "ENUM"
 
     def activate(**metadata):
         def decorate(function):
@@ -116,7 +150,7 @@ class ComponentTests(unittest.TestCase):
     def setUpClass(cls):
         cls.functions = {
             name: load_component(name)
-            for name in ("AT_CYLINDER", "AT_SPACER", "AT_FLANGE")
+            for name in COMPONENT_NAMES
         }
 
     def run_component(self, name, **parameters):
@@ -133,7 +167,7 @@ class ComponentTests(unittest.TestCase):
         session = SessionRecorder()
         with self.assertRaises(ValueError):
             self.functions[name](session, **parameters)
-        self.assertEqual(session.cylinders, [])
+        self.assertEqual(session.objects, [])
         self.assertEqual(session.ports, [])
 
     def test_each_script_has_matching_entry_point_and_dimension_metadata(self):
@@ -144,7 +178,7 @@ class ComponentTests(unittest.TestCase):
                 dimensions = set(inspect.signature(function).parameters) - {"s", "kw"}
                 declared = set()
                 for metadata in function.parameters:
-                    declared.update(k for k, v in metadata.items() if v in ("LENGTH", "ENUM"))
+                    declared.update(k for k, v in metadata.items() if v in ("LENGTH", "LENGTH0", "ENUM"))
                 self.assertEqual(declared, dimensions)
                 self.assertEqual(function.metadata["LengthUnit"], "mm")
 
@@ -251,7 +285,7 @@ class ComponentTests(unittest.TestCase):
             for dimension in inspect.signature(function).parameters:
                 if dimension in ("s", "kw", "N"):
                     continue
-                for value in (0, -1):
+                for value in ((-1,) if dimension == "C" else (0, -1)):
                     with self.subTest(component=name, dimension=dimension, value=value):
                         self.assert_rejected_without_geometry(name, **{dimension: value})
 
@@ -266,7 +300,8 @@ class ComponentTests(unittest.TestCase):
 
     def test_nonnumeric_dimensions_rejected_before_geometry(self):
         for name in self.functions:
-            dimension = "D" if name == "AT_CYLINDER" else "OD"
+            dimension = next(k for k in inspect.signature(self.functions[name]).parameters
+                             if k not in ("s", "kw"))
             for value in (None, "not a dimension", object()):
                 with self.subTest(component=name, value=value):
                     self.assert_rejected_without_geometry(name, **{dimension: value})
@@ -303,6 +338,138 @@ class ComponentTests(unittest.TestCase):
         for count in (0, -4, 3, 6, 4.5, 32, float("nan"), float("inf"), "four"):
             with self.subTest(count=count):
                 self.assert_rejected_without_geometry("AT_FLANGE", N=count)
+
+    def test_uband_crown_inside_clearance_and_width(self):
+        body = self.run_component("AT_UBAND").objects[0]
+        self.assertIsInstance(body, CylinderRecorder)
+        self.assertAlmostEqual(body.bore_radius - 114.3 / 2, 1.0)
+        self.assertAlmostEqual(body.radius - body.bore_radius, 6.0)
+        self.assertEqual(body.length, 30.0)
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        self.assertEqual(body.origin, (-15, 0, 0))
+        cut = body.cutters[0]
+        self.assertEqual(cut.origin[2] + cut.spans[2] / 2, 0)
+        self.assertLess(cut.origin[2] - cut.spans[2] / 2, -body.radius)
+
+    def test_uband_legs_touch_crown_and_feet_overlap_legs(self):
+        body = self.run_component("AT_UBAND").objects[0]
+        self.assertEqual(len(body.joined), 4)
+        for leg, foot in (body.joined[:2], body.joined[2:]):
+            self.assertEqual(leg.origin[2] + leg.spans[2] / 2, 0)
+            self.assertEqual(leg.origin[2] - leg.spans[2] / 2, -75)
+            self.assertEqual(foot.origin[2] - foot.spans[2] / 2, -75)
+            self.assertEqual(foot.origin[2] + foot.spans[2] / 2, -69)
+            self.assertAlmostEqual(abs(leg.origin[1]) - leg.spans[1] / 2, body.bore_radius)
+            # Intersection in Y has positive width, not an unattached foot.
+            overlap = min(leg.origin[1] + leg.spans[1] / 2, foot.origin[1] + foot.spans[1] / 2) - max(leg.origin[1] - leg.spans[1] / 2, foot.origin[1] - foot.spans[1] / 2)
+            self.assertAlmostEqual(overlap, 6)
+
+    def test_uband_mounting_holes_are_centred_in_free_foot_area(self):
+        body = self.run_component("AT_UBAND").objects[0]
+        holes = body.cutters[1:]
+        self.assertEqual(len(holes), 2)
+        for hole in holes:
+            self.assertEqual(hole.origin[0], 0)
+            self.assertAlmostEqual(abs(hole.origin[1]), body.radius + 35 / 2)
+            self.assertLess(abs(hole.origin[0]) + hole.radius, 30 / 2)
+            self.assertGreater(abs(hole.origin[1]) - hole.radius, body.radius)
+            self.assertLess(abs(hole.origin[1]) + hole.radius, body.radius + 35)
+            self.assertLess(hole.origin[2], -75)
+            self.assertGreater(hole.origin[2] + hole.length, -69)
+
+    def test_uband_bad_foot_dimensions_rejected(self):
+        for parameters in ({"H": 6}, {"H": 5}, {"HD": 30}, {"F": 11}, {"C": -0.1}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_UBAND", **parameters)
+
+    def test_clamps_allow_zero_clearance_and_custom_sizes(self):
+        for name in ("AT_UBAND", "AT_UBOLT"):
+            session = self.run_component(name, PD=60.3, C=0, H=80)
+            body = session.objects[0]
+            inner = body.bore_radius if name == "AT_UBAND" else body.bend_radius - body.tube_radius
+            self.assertAlmostEqual(inner, 60.3 / 2)
+            self.assertEqual(session.ports, [((0, 0, 0), (-1, 0, 0))])
+
+    def test_ubolt_radius_fit_and_tangent_leg_alignment(self):
+        body = self.run_component("AT_UBOLT").objects[0]
+        self.assertIsInstance(body, TorusRecorder)
+        self.assertAlmostEqual(body.bend_radius - body.tube_radius, 114.3 / 2 + 1)
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        self.assertEqual(len(body.joined), 2)
+        for leg in body.joined:
+            self.assertAlmostEqual(abs(leg.origin[1]), body.bend_radius)
+            self.assertEqual(leg.radius, body.tube_radius)
+            self.assertEqual(leg.origin[2], -100)
+            self.assertEqual(leg.origin[2] + leg.length, 0)
+            self.assert_vector_close(leg.axis, (0, 0, 1))
+
+    def test_reducer_bore_extrapolation_preserves_end_dimensions(self):
+        session = self.run_component("AT_REDUCER")
+        body = session.objects[0]
+        bore = body.cutters[0]
+        self.assertEqual(body.radii, (168.3 / 2, 114.3 / 2))
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        self.assertLess(bore.origin[0], 0)
+        self.assertGreater(bore.origin[0] + bore.length, 150)
+        for x, diameter in ((0, 154.1), (150, 102.3)):
+            fraction = (x - bore.origin[0]) / bore.length
+            radius = bore.radii[0] + fraction * (bore.radii[1] - bore.radii[0])
+            self.assertAlmostEqual(2 * radius, diameter)
+        self.assertEqual(session.ports[-1], ((150, 0, 0), (1, 0, 0)))
+
+    def test_reducer_rejects_reversed_sizes_and_zero_walls(self):
+        for parameters in ({"OD1": 114.3}, {"OD2": 180}, {"ID1": 100}, {"ID2": 154.1}, {"ID1": 168.3}, {"ID2": 114.3}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_REDUCER", **parameters)
+
+    def test_reducer_thin_small_end_keeps_cutter_radii_positive(self):
+        body = self.run_component("AT_REDUCER", OD1=100, ID1=90, OD2=1, ID2=0.01, L=0.5).objects[0]
+        self.assertTrue(all(r > 0 for r in body.cutters[0].radii))
+
+    def test_elbow_hollow_section_and_quadrant_cutters(self):
+        body = self.run_component("AT_ELBOW90").objects[0]
+        bore, cut_x, cut_y = body.cutters
+        self.assertEqual(body.bend_radius, 152.4)
+        self.assertEqual(body.tube_radius, 114.3 / 2)
+        self.assertEqual(bore.bend_radius, body.bend_radius)
+        self.assertEqual(bore.tube_radius, 102.3 / 2)
+        self.assertEqual(cut_x.origin[0] + cut_x.spans[0] / 2, 0)
+        self.assertEqual(cut_y.origin[1] + cut_y.spans[1] / 2, 0)
+        self.assertEqual(body.origin, (0, -152.4, 0))
+
+    def test_elbow_ports_follow_outward_tangents(self):
+        ports = self.run_component("AT_ELBOW90", BR=200).ports
+        centre = (0, -200, 0)
+        self.assertEqual(ports, [((0, 0, 0), (-1, 0, 0)), ((200, -200, 0), (0, -1, 0))])
+        for point, direction in ports:
+            radius = tuple(p - c for p, c in zip(point, centre))
+            self.assertAlmostEqual(sum(r * d for r, d in zip(radius, direction)), 0)
+            self.assertAlmostEqual(math.dist(point, centre), 200)
+
+    def test_elbow_rejects_degenerate_or_self_intersecting_section(self):
+        for parameters in ({"ID": 114.3}, {"BR": 114.3 / 2}, {"BR": 20}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_ELBOW90", **parameters)
+
+    def test_blind_flange_is_solid_with_one_reference_point(self):
+        for count in (4, 8, 12, 16):
+            session = self.run_component("AT_BLIND_FLANGE", N=count)
+            body = session.objects[0]
+            self.assertEqual(body.bore_radius, 0)
+            self.assertEqual(len(body.cutters), count)
+            self.assertEqual(session.ports, [((0, 0, 0), (-1, 0, 0))])
+
+    def test_blind_flange_rejects_invalid_patterns(self):
+        for parameters in ({"N": 6}, {"N": 4.5}, {"BCD": 162}, {"HD": 28, "N": 16}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_BLIND_FLANGE", **parameters)
+
+    def test_new_components_erase_all_temporary_objects(self):
+        for name in COMPONENT_NAMES[3:]:
+            session = self.run_component(name)
+            with self.subTest(component=name):
+                self.assertFalse(session.objects[0].erased)
+                self.assertTrue(all(obj.erased for obj in session.objects[1:]))
 
 
 if __name__ == "__main__":
