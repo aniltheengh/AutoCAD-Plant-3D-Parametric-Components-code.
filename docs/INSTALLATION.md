@@ -2,9 +2,9 @@
 
 These scripts require **AutoCAD Plant 3D's embedded geometry libraries**. Ordinary Python can check their syntax, but cannot generate or validate their Plant 3D solids. No Plant 3D version has been runtime-tested for this library yet.
 
-## 1. Copy the eight scripts
+## 1. Copy the twelve scripts
 
-From the project folder, copy only the eight `.py` files in `CustomScripts` into your configured Plant 3D shared-content folder:
+From the project folder, copy only the twelve `.py` files in `CustomScripts` into your configured Plant 3D shared-content folder:
 
 ```text
 <Shared Content Folder>\CPak Common\CustomScripts\
@@ -37,7 +37,7 @@ This procedure follows [Autodesk's custom Python tutorial, Part 3](https://blog.
 
 ## 3. Check the result
 
-For each part, measure the dimensions listed in [COMPONENTS.md](COMPONENTS.md) against its [reference image](GALLERY.md). Straight parts use +X; the elbow turns from +X toward -Y. Clamp anchors are at the pipe centre, with their crowns above and feet/legs below it. Check bores, hole positions, joining faces and reference-point directions. Change the dimensions and verify that a new instance reflects them. Invalid dimensions should produce a useful error instead of a malformed component.
+For each part, measure the dimensions listed in [COMPONENTS.md](COMPONENTS.md) against its [reference image](GALLERY.md). Straight parts use +X; the elbow turns from +X toward -Y, and the tee's branch points +Y from its centre. Clamp and shoe anchors are at the pipe centre, with crowns above and feet, legs or base plates below it. The coupling's two ports are inside its housing, at the pipe ends. Check bores, hole positions, joining faces and reference-point directions. Change the dimensions and verify that a new instance reflects them. Invalid dimensions should produce a useful error instead of a malformed component.
 
 Record your Plant 3D version, parameters, observed dimensions, and any command-line error. Passing the repository's offline checks is not evidence that these checks passed in Plant 3D.
 
@@ -57,6 +57,7 @@ The metadata and matching-name conventions are described in [Autodesk's tutorial
 | Script is not found | Check the configured content folder, matching filename/function, and registration output. |
 | Geometry stays unchanged after an edit | Confirm the deployed file and installed release; older releases may need a restart. |
 | Adapter load or geometry error | Preserve the exact command-line message and Plant 3D version for diagnosis. |
+| `AT_SPACER`, `AT_FLANGE` or `AT_ELBOW90` reports an `ID` error with default dimensions | Possible clash with the `ID` argument used by stock scripts; see [the API notes](COMPONENTS.md#coordinate-and-api-notes). |
 | Solid appears but catalog insertion or connections fail | Check the part family and port/end-type configuration independently of the geometry test. |
 
-The `images` folder contains documentation previews. This library does not claim that they are registered Spec Editor thumbnails. Only copy the eight source scripts for the initial geometry test; keep the documents, test recorder and preview generator outside Plant 3D's content folder.
+The `images` folder contains documentation previews. This library does not claim that they are registered Spec Editor thumbnails. Only copy the twelve source scripts for the initial geometry test; keep the documents, test recorder and preview generator outside Plant 3D's content folder.

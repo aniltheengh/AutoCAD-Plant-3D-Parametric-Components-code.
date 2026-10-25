@@ -17,7 +17,8 @@ from unittest.mock import patch
 
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "CustomScripts"
 COMPONENT_NAMES = ("AT_CYLINDER", "AT_SPACER", "AT_FLANGE", "AT_BLIND_FLANGE",
-                   "AT_UBAND", "AT_UBOLT", "AT_REDUCER", "AT_ELBOW90")
+                   "AT_UBAND", "AT_UBOLT", "AT_REDUCER", "AT_ELBOW90",
+                   "AT_TEE", "AT_CAP", "AT_GROOVED_COUPLING", "AT_PIPE_SHOE")
 
 
 class SessionRecorder:
@@ -50,6 +51,18 @@ class PrimitiveRecorder:
         def rotate(vector):
             x, y, z = vector
             return (c * x + s * z, y, -s * x + c * z)
+
+        self.origin = rotate(self.origin)
+        self.axis = rotate(self.axis)
+        return self
+
+    def rotateZ(self, degrees):
+        radians = math.radians(degrees)
+        c, s = math.cos(radians), math.sin(radians)
+
+        def rotate(vector):
+            x, y, z = vector
+            return (c * x - s * y, s * x + c * y, z)
 
         self.origin = rotate(self.origin)
         self.axis = rotate(self.axis)
@@ -99,6 +112,13 @@ class ConeRecorder(PrimitiveRecorder):
         self.radii, self.length, self.eccentricity = (R1, R2), H, E
 
 
+class EllipsoidHeadRecorder(PrimitiveRecorder):
+    def __init__(self, session, R):
+        super().__init__(session)
+        # Documented 2:1 head: semi-axes R and R/2, base point at bottom centre.
+        self.radius, self.height = R, R / 2.0
+
+
 def load_component(name):
     """Execute one real source file with isolated recording API replacements."""
     package = types.ModuleType("varmain")
@@ -108,6 +128,7 @@ def load_component(name):
     primitives.BOX = BoxRecorder
     primitives.TORUS = TorusRecorder
     primitives.CONE = ConeRecorder
+    primitives.ELLIPSOIDHEAD2 = EllipsoidHeadRecorder
     custom = types.ModuleType("varmain.custom")
     custom.LENGTH, custom.LENGTH0, custom.ENUM = "LENGTH", "LENGTH0", "ENUM"
 
@@ -282,10 +303,12 @@ class ComponentTests(unittest.TestCase):
 
     def test_nonpositive_dimensions_rejected_before_geometry(self):
         for name, function in self.functions.items():
+            zero_allowed = {k for metadata in function.parameters
+                            for k, v in metadata.items() if v == "LENGTH0"}
             for dimension in inspect.signature(function).parameters:
                 if dimension in ("s", "kw", "N"):
                     continue
-                for value in ((-1,) if dimension == "C" else (0, -1)):
+                for value in ((-1,) if dimension in zero_allowed else (0, -1)):
                     with self.subTest(component=name, dimension=dimension, value=value):
                         self.assert_rejected_without_geometry(name, **{dimension: value})
 
@@ -463,6 +486,144 @@ class ComponentTests(unittest.TestCase):
         for parameters in ({"N": 6}, {"N": 4.5}, {"BCD": 162}, {"HD": 28, "N": 16}):
             with self.subTest(parameters=parameters):
                 self.assert_rejected_without_geometry("AT_BLIND_FLANGE", **parameters)
+
+    def test_tee_run_and_branch_meet_at_origin_with_three_ports(self):
+        session = self.run_component("AT_TEE")
+        body = session.objects[0]
+        self.assertEqual((body.radius, body.length), (114.3 / 2, 210))
+        self.assert_vector_close(body.origin, (-105, 0, 0))
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        branch = body.joined[0]
+        self.assertEqual((branch.radius, branch.length), (114.3 / 2, 105))
+        self.assert_vector_close(branch.origin, (0, 0, 0))
+        self.assert_vector_close(branch.axis, (0, 1, 0))
+        self.assertEqual(session.ports, [((-105, 0, 0), (-1, 0, 0)),
+                                         ((105, 0, 0), (1, 0, 0)),
+                                         ((0, 105, 0), (0, 1, 0))])
+
+    def test_tee_bores_open_through_all_three_ends(self):
+        body = self.run_component("AT_TEE", OD2=60.3, ID2=52.3, M=95).objects[0]
+        run_bore, branch_bore = body.cutters
+        self.assertEqual(run_bore.radius, 102.3 / 2)
+        self.assertLess(run_bore.origin[0], -105)
+        self.assertGreater(run_bore.origin[0] + run_bore.length, 105)
+        self.assertEqual(branch_bore.radius, 52.3 / 2)
+        self.assert_vector_close(branch_bore.origin, (0, 0, 0))
+        self.assert_vector_close(branch_bore.axis, (0, 1, 0))
+        self.assertGreater(branch_bore.length, 95)
+        self.assertEqual(body.joined[0].radius, 60.3 / 2)
+
+    def test_tee_rejects_oversized_branch_and_short_ends(self):
+        for parameters in ({"ID1": 114.3}, {"ID2": 114.3}, {"OD2": 120},
+                           {"OD2": 80, "ID2": 70, "ID1": 60},
+                           {"C": 114.3 / 2}, {"M": 114.3 / 2}, {"M": 50}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_TEE", **parameters)
+
+    def test_cap_skirt_and_head_join_and_crown_is_at_l(self):
+        body = self.run_component("AT_CAP").objects[0]
+        head = body.joined[0]
+        self.assertIsInstance(head, EllipsoidHeadRecorder)
+        self.assertEqual((body.radius, head.radius), (114.3 / 2, 114.3 / 2))
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        self.assert_vector_close(head.axis, (1, 0, 0))
+        self.assertAlmostEqual(body.origin[0] + body.length, head.origin[0])
+        self.assertAlmostEqual(head.origin[0] + head.height, 64)
+
+    def test_cap_cavity_is_open_and_walls_match_wt(self):
+        session = self.run_component("AT_CAP")
+        body = session.objects[0]
+        cavity = body.cutters[0]
+        inner_head = cavity.joined[0]
+        self.assertAlmostEqual(body.radius - cavity.radius, 6)
+        self.assertEqual(inner_head.radius, cavity.radius)
+        self.assertLess(cavity.origin[0], 0)
+        self.assertAlmostEqual(cavity.origin[0] + cavity.length, inner_head.origin[0])
+        self.assertAlmostEqual(64 - (inner_head.origin[0] + inner_head.height), 6)
+        self.assertEqual(session.ports, [((0, 0, 0), (-1, 0, 0))])
+
+    def test_cap_rejects_no_bore_or_too_short_length(self):
+        for parameters in ({"WT": 114.3 / 2}, {"L": 31}, {"OD": 100, "WT": 10, "L": 30}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_CAP", **parameters)
+        cavity = self.run_component("AT_CAP", OD=100, WT=10, L=31).objects[0].cutters[0]
+        self.assertGreater(cavity.origin[0] + cavity.length, 0)
+
+    def test_coupling_ports_straddle_the_pipe_end_gap(self):
+        session = self.run_component("AT_GROOVED_COUPLING")
+        self.assertEqual(session.ports, [((28.5, 0, 0), (-1, 0, 0)),
+                                         ((31.5, 0, 0), (1, 0, 0))])
+        session = self.run_component("AT_GROOVED_COUPLING", HL=80, G=6)
+        self.assertEqual([p[0][0] for p in session.ports], [37, 43])
+
+    def test_coupling_housing_bore_fits_pipe_and_passes_through(self):
+        body = self.run_component("AT_GROOVED_COUPLING").objects[0]
+        bore = body.cutters[0]
+        self.assertEqual((body.radius, body.length, body.bore_radius), (75, 60, 0))
+        self.assert_vector_close(body.axis, (1, 0, 0))
+        self.assertEqual(bore.radius, 114.3 / 2)
+        self.assertLess(bore.origin[0], 0)
+        self.assertGreater(bore.origin[0] + bore.length, 60)
+
+    def test_coupling_pads_start_on_housing_chord(self):
+        body = self.run_component("AT_GROOVED_COUPLING").objects[0]
+        self.assertEqual(len(body.joined), 2)
+        for pad in body.joined:
+            self.assertIsInstance(pad, BoxRecorder)
+            length, depth, height = pad.spans
+            self.assertEqual((pad.origin[0], length, height), (30, 60, 40))
+            inner = abs(pad.origin[1]) - depth / 2
+            self.assertAlmostEqual(abs(pad.origin[1]) + depth / 2, 105)
+            # The pad's inner top/bottom edges lie on the housing surface.
+            self.assertAlmostEqual(math.hypot(inner, height / 2), 75)
+        self.assertEqual(sorted(math.copysign(1, p.origin[1]) for p in body.joined), [-1, 1])
+
+    def test_coupling_bolt_holes_cross_pads_outside_housing(self):
+        body = self.run_component("AT_GROOVED_COUPLING").objects[0]
+        holes = body.cutters[1:]
+        self.assertEqual(len(holes), 2)
+        for hole in holes:
+            self.assert_vector_close(hole.axis, (0, 0, 1))
+            self.assertEqual(hole.origin[0], 30)
+            self.assertGreater(abs(hole.origin[1]) - hole.radius, 75)
+            self.assertLess(abs(hole.origin[1]) + hole.radius, 105)
+            self.assertLess(hole.origin[2], -20)
+            self.assertGreater(hole.origin[2] + hole.length, 20)
+
+    def test_coupling_rejects_impossible_housing_pads_and_gap(self):
+        for parameters in ({"PD": 150}, {"HD": 114.3}, {"PH": 150}, {"BH": 30},
+                           {"BH": 65, "P": 80}, {"G": 60}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_GROOVED_COUPLING", **parameters)
+
+    def test_shoe_web_reaches_pipe_centre_and_is_cut_to_pipe(self):
+        session = self.run_component("AT_PIPE_SHOE")
+        web = session.objects[0]
+        self.assertIsInstance(web, BoxRecorder)
+        self.assertEqual(web.spans, (200, 10, 100))
+        self.assertEqual(web.origin[2] + web.spans[2] / 2, 0)
+        self.assertEqual(web.origin[2] - web.spans[2] / 2, -100)
+        pipe = web.cutters[0]
+        self.assertEqual(pipe.radius, 114.3 / 2)
+        self.assert_vector_close(pipe.axis, (1, 0, 0))
+        self.assertLess(pipe.origin[0], -100)
+        self.assertGreater(pipe.origin[0] + pipe.length, 100)
+        self.assertEqual(session.ports, [((0, 0, 0), (-1, 0, 0))])
+
+    def test_shoe_base_plate_sits_below_pipe_at_depth_h(self):
+        for size, depth in ((114.3, 100), (60.3, 80)):
+            with self.subTest(pipe=size):
+                web = self.run_component("AT_PIPE_SHOE", PD=size, H=depth).objects[0]
+                base = web.joined[0]
+                self.assertEqual(base.spans, (200, 120, 10))
+                self.assertEqual(base.origin[2] - base.spans[2] / 2, -depth)
+                self.assertLess(base.origin[2] + base.spans[2] / 2, -size / 2)
+
+    def test_shoe_rejects_base_in_pipe_and_oversized_web(self):
+        for parameters in ({"PD": 100, "T": 10, "H": 60}, {"H": 60}, {"W": 10},
+                           {"T": 120, "W": 130, "H": 300}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("AT_PIPE_SHOE", **parameters)
 
     def test_new_components_erase_all_temporary_objects(self):
         for name in COMPONENT_NAMES[3:]:

@@ -6,3 +6,6 @@ __pycache__/
 *.dwl
 *.dwl2
 *.log
+
+# Local reference material (Autodesk and forum code); never publish it.
+Source Files/

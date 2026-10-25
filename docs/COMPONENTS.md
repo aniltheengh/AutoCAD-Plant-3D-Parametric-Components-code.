@@ -2,7 +2,7 @@
 
 All dimensions are in **millimetres**. These are original learning examples with illustrative defaults; no JIS, ASME, pressure class, material, or load rating is implied. Their solids, registration, and catalog behavior still require testing inside Plant 3D.
 
-See the [image gallery](GALLERY.md) for all eight dimensioned reference sheets. The flat strap U-band is documented below under `AT_UBAND`; the round U-bolt is a separate part.
+See the [image gallery](GALLERY.md) for all twelve dimensioned reference sheets. The flat strap U-band is documented below under `AT_UBAND`; the round U-bolt is a separate part.
 
 ## AT_CYLINDER — solid cylinder
 
@@ -129,10 +129,74 @@ All dimensions must be positive and finite. Both outer and bore diameters reduce
 
 The first point is `(0,0,0)`, direction `(-1,0,0)`. The second is `(BR,-BR,0)`, direction `(0,-1,0)`. The bend lies in XY, with its centre at `(0,-BR,0)`. Geometry is a hollow quarter-torus; no straight tangent extensions or weld bevels are included.
 
+## AT_TEE - straight tee, equal or reducing
+
+[Source](../CustomScripts/AT_TEE.py) | [Image](../images/AT_TEE.png). Group `Tee`, three outward references. The origin is the intersection of the run and branch centrelines.
+
+| Parameter | Meaning | Default | Requirement |
+| --- | --- | ---: | --- |
+| `OD1` | Run outside diameter | 114.3 | Positive and finite |
+| `ID1` | Run bore diameter | 102.3 | Less than `OD1` |
+| `OD2` | Branch outside diameter | 114.3 | Greater than `ID2`, no larger than `OD1` |
+| `ID2` | Branch bore diameter | 102.3 | Less than `OD2`, no larger than `ID1` |
+| `C` | Centre to each run end | 105 | Greater than `OD2/2` |
+| `M` | Centre to branch end | 105 | Greater than `OD1/2` |
+
+The ports are `(-C,0,0)` pointing `(-1,0,0)`, `(C,0,0)` pointing `(1,0,0)`, and `(0,M,0)` pointing `(0,1,0)`, the same layout as Plant 3D's stock tees. The branch cylinder starts on the run axis and is turned to +Y with `rotateY(90)` then `rotateZ(90)`. Its bore cutter also starts on the run axis, inside the run bore, so the branch opening has no coincident faces; the run bore cutter extends past both run faces. There is no crotch radius or forged contour, and the defaults are not a standard size table. An equal tee makes tangent cylinder intersections, so check that solid in Plant 3D.
+
+## AT_CAP - ellipsoidal pipe cap
+
+[Source](../CustomScripts/AT_CAP.py) | [Image](../images/AT_CAP.png). Group `Cap`, one port at the open end `(0,0,0)` pointing `-X`. The outer crown is at `X=L`.
+
+| Parameter | Meaning | Default | Requirement |
+| --- | --- | ---: | --- |
+| `OD` | Outside diameter | 114.3 | Positive and finite |
+| `WT` | Wall thickness | 6 | Less than `OD/2` |
+| `L` | Open end to outer crown | 64 | Greater than `OD/4 + WT/2` |
+
+The head is the `ELLIPSOIDHEAD2` primitive: a 2:1 semi-ellipsoid whose height is half its radius. The outer head's base is at `X = L - OD/4`. The inner head is set lower by `WT`, so the crown is exactly `WT` thick; elsewhere on the head the thickness varies, because two ellipses are not parallel curves. The `L` limit keeps the inner straight bore longer than zero. The build order follows Autodesk's cap example `CPC`: a skirt cylinder united with a head, then a cavity cylinder united with a smaller head and subtracted. The cavity cutter extends past the open face.
+
+## AT_GROOVED_COUPLING - grooved coupling housing
+
+[Source](../CustomScripts/AT_GROOVED_COUPLING.py) | [Image](../images/AT_GROOVED_COUPLING.png). Group `Coupling`, two ports. The housing runs from X=0 to X=`HL`. The pipe ends meet at its centre, separated by `G`. The ports are at `X=(HL-G)/2` pointing -X and `X=(HL+G)/2` pointing +X, so connected pipes run inside the housing up to the ports. Autodesk's stock `CCOUPLING` uses the same idea, with ports at its insertion depths.
+
+| Parameter | Meaning | Default | Requirement |
+| --- | --- | ---: | --- |
+| `PD` | Pipe outside diameter, equal to the housing bore | 114.3 | Less than `HD` |
+| `HD` | Housing outside diameter | 150 | Positive and finite |
+| `HL` | Housing length along X | 60 | Greater than `G` and `BH` |
+| `G` | Gap between the pipe ends | 3 | Positive, less than `HL` |
+| `P` | Bolt-pad projection beyond the housing | 30 | Greater than `BH` |
+| `PH` | Bolt-pad height along Z | 40 | Less than `HD` |
+| `BH` | Bolt-hole diameter | 14 | Less than `P` and `HL` |
+
+The two bolt pads are at +Y and -Y, centred on X=`HL/2` and as long as the housing. Each pad starts at `Y = +/- sqrt((HD/2)^2 - (PH/2)^2)`, where its top and bottom faces meet the housing surface, so it blends into the housing without a step. The bolt holes run along Z at `Y = +/- (HD/2 + P/2)`, entirely outside the housing. Keys, gasket, pipe grooves, bolts, nuts and the split between the housing halves are not modelled, and the defaults are not a manufacturer's dimensions.
+
+## AT_PIPE_SHOE - T-section pipe shoe
+
+[Source](../CustomScripts/AT_PIPE_SHOE.py) | [Image](../images/AT_PIPE_SHOE.png). Group `Support`, one anchor at the pipe centre pointing -X. The pipe axis is X; the shoe is centred on X=0 and lies below Z=0.
+
+| Parameter | Meaning | Default | Requirement |
+| --- | --- | ---: | --- |
+| `PD` | Pipe outside diameter | 114.3 | Greater than `T` |
+| `L` | Shoe length along X | 200 | Positive and finite |
+| `H` | Pipe centre to underside of the base plate | 100 | Greater than `PD/2 + T` |
+| `W` | Base-plate width along Y | 120 | Greater than `T` |
+| `T` | Web and base-plate thickness | 10 | Less than `W` and `PD` |
+
+The web is built from the pipe centre down to Z=-H. Subtracting a pipe cylinder then shapes its top to the pipe radius, the same technique as Plant 3D's stock shoe `CSGB000`. The base plate spans Z=-H to Z=-H+T, below the pipe. The shoe is not load-rated, and has no slots, hold-downs, stiffeners or weld details.
+
 ## Coordinate and API notes
 
 The scripts orient cylinders along +X using `rotateY(90)`. In the underlying cylinder primitive, `O` means **hole radius**, so a bore diameter is divided by two. The drilled flange uses subtractive cutters, which must be erased after subtraction. Scripted ports use a position and direction vector.
 
 These conventions are documented in the [Autodesk University custom component scripting handout](https://forums.autodesk.com/autodesk/attachments/autodesk/autocad-plant-3d-forum-zh-cn/4870/1/v1_PD4214-L_Radhakrishnan_AnnexB_Custom-Script-Handout.pdf), particularly pages 9, 24, 26, 28, and 32. This legacy reference informs the implementation; it does not replace runtime verification.
+
+Notes added with the tee, cap, coupling and shoe:
+
+- **`ELLIPSOIDHEAD2(s, R)`** is a 2:1 ellipsoidal head with semi-axes `R` and `R/2`; its base point is the centre of its flat side (handout page 11). `uniteWith` keeps the calling object and the other object must then be erased (page 23). The cap's build order follows the handout's `CPC` example (pages 33-34).
+- **`BOX`** has its base point at its centre, with spans `H` along X, `L` along Y and `W` along Z, as described in the [forum references](FORUM_REFERENCES.md).
+- **`rotateY(90).rotateZ(angle)`** is how Autodesk's welded tee points its branches within the XY plane. `rotateZ(90)` turns +X into +Y. The handout's eccentric-adapter example (page 25) places its ports consistently with a right-handed `rotateZ`.
+- **Parameter named `ID`.** Every stock Autodesk script declares a keyword argument `ID='<script name>'`. Whether Plant 3D passes `ID` into custom scripts at run time has not been verified. The four newer scripts avoid a parameter named exactly `ID`, using `ID1`/`ID2` or `WT`. `AT_SPACER`, `AT_FLANGE` and `AT_ELBOW90` still use `ID` for a bore. If one of them reports a bore validation error with default dimensions during the first Plant 3D test, suspect this clash.
 
 Begin with [installation and testing](INSTALLATION.md), then use the [manual command reference](../examples/plant3d-test-commands.lsp).

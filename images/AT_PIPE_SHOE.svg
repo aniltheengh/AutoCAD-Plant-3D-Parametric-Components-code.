@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="576pt" viewBox="0 0 864 576" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Parametric component reference drawing</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 576
+L 864 576
+L 864 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 289.44 355.223984
+L 289.44 306.350426
+L 290.6716 306.44952
+L 291.903201 306.53051
+L 293.134801 306.593449
+L 294.366401 306.638376
+L 295.598001 306.665321
+L 296.829602 306.674301
+L 298.061202 306.665321
+L 299.292802 306.638376
+L 300.524402 306.593449
+L 301.756003 306.53051
+L 302.987603 306.44952
+L 304.219203 306.350426
+L 304.219203 355.223984
+z
+" clip-path="url(#p30ddcd3cfa)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 208.154382 370.003187
+L 385.504821 370.003187
+L 385.504821 355.223984
+L 208.154382 355.223984
+z
+" clip-path="url(#p30ddcd3cfa)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 296.829602 306.674301
+C 319.22949 306.674301 340.714952 297.774731 356.554065 281.935618
+C 372.393178 266.096505 381.292748 244.611043 381.292748 222.211155
+C 381.292748 199.811266 372.393178 178.325804 356.554065 162.486691
+C 340.714952 146.647578 319.22949 137.748008 296.829602 137.748008
+C 274.429713 137.748008 252.944251 146.647578 237.105138 162.486691
+C 221.266025 178.325804 212.366455 199.811266 212.366455 222.211155
+C 212.366455 244.611043 221.266025 266.096505 237.105138 281.935618
+C 252.944251 297.774731 274.429713 306.674301 296.829602 306.674301
+L 296.829602 306.674301
+z
+" clip-path="url(#p30ddcd3cfa)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #71818b; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #71818b" transform="translate(286.165539 219.371623)">PIPE</text>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #71818b" transform="translate(268.282727 230.569436)">PD = 114.3</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 184.507657 225.439035
+Q 184.507657 296.107329 184.507657 366.775623
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 182.507657 229.439035
+L 184.507657 225.439035
+L 186.507657 229.439035
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 186.507657 362.775623
+L 184.507657 366.775623
+L 182.507657 362.775623
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_2">
+    <g id="patch_6">
+     <path d="M 190.846719 318.279046
+L 190.846719 273.935296
+L 178.168594 273.935296
+L 178.168594 318.279046
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #b65a20" transform="translate(187.267032 316.779046) rotate(-90)">H = 100</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 382.275137 396.605753
+Q 296.829029 396.605753 211.382921 396.605753
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 378.275137 394.605753
+L 382.275137 396.605753
+L 378.275137 398.605753
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 215.382921 398.605753
+L 211.382921 396.605753
+L 215.382921 394.605753
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b65a20" x="296.829602" y="389.526065" transform="rotate(-0 296.829602 389.526065)">W = 120</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 364.293772 318.172069
+Q 335.233653 324.274441 307.267703 330.147046
+" style="fill: none; stroke: #b65a20; stroke-linecap: round"/>
+    <path d="M 311.593342 331.28232
+L 307.267703 330.147046
+L 310.771306 327.3677
+" style="fill: none; stroke: #b65a20; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #b65a20" x="345.600972" y="313.681459" transform="rotate(-0 345.600972 313.681459)">T = 10 web and base</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="289.44" y="88.8" transform="rotate(-0 289.44 88.8)">End view / pipe axis X out of page</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_9">
+    <path d="M 610.848 329.495904
+L 797.472 329.495904
+L 797.472 289.307225
+L 610.848 289.307225
+z
+" clip-path="url(#pd07cd44ae6)" style="fill: #c6e2e4; stroke: #153e4a; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 610.848 320.164704
+L 797.472 320.164704
+" clip-path="url(#pd07cd44ae6)" style="fill: none; stroke: #153e4a; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 596.8512 289.511712
+L 811.4688 289.511712
+" clip-path="url(#pd07cd44ae6)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #71818b"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 596.8512 182.856096
+L 811.4688 182.856096
+" clip-path="url(#pd07cd44ae6)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #71818b"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 596.8512 236.183904
+L 811.4688 236.183904
+" clip-path="url(#pd07cd44ae6)" style="fill: none; stroke-dasharray: 4.48,1.12,0.7,1.12; stroke-dashoffset: 0; stroke: #71818b; stroke-width: 0.7"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 794.24026 351.890784
+Q 704.157714 351.890784 614.075168 351.890784
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 790.24026 349.890784
+L 794.24026 351.890784
+L 790.24026 353.890784
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 618.075168 353.890784
+L 614.075168 351.890784
+L 618.075168 349.890784
+" style="fill: none; stroke: #b65a20; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #b65a20" x="704.16" y="344.811096" transform="rotate(-0 704.16 344.811096)">L = 200</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #71818b" x="704.16" y="152.193696" transform="rotate(-0 704.16 152.193696)">Side view / X to the right</text>
+   </g>
+  </g>
+  <g id="text_8">
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="34.56" transform="rotate(-0 47.52 34.56)">T-section pipe shoe</text>
+  </g>
+  <g id="text_9">
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="60.48" transform="rotate(-0 47.52 60.48)">AT_PIPE_SHOE  |  DEFAULT DIMENSIONS IN mm</text>
+  </g>
+  <g id="text_10">
+   <g id="patch_11">
+    <path d="M 38.5 483.933594
+L 391.88875 483.933594
+L 391.88875 454.893594
+L 38.5 454.893594
+z
+" style="fill: #edf5f5"/>
+   </g>
+   <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #153e4a" x="47.52" y="472.32" transform="rotate(-0 47.52 472.32)">PD = 114.3   |   L = 200   |   H = 100   |   W = 120   |   T = 10</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="512.64" transform="rotate(-0 47.52 512.64)">Web cut to the pipe radius on a flat base plate. The dashed pipe is a fit reference only.</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #71818b" x="47.52" y="550.08" transform="rotate(-0 47.52 550.08)">REFERENCE ILLUSTRATION  |  Not a Plant 3D render or a manufacturing drawing.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p30ddcd3cfa">
+   <rect x="149.037569" y="100.8" width="280.804862" height="328.32"/>
+  </clipPath>
+  <clipPath id="pd07cd44ae6">
+   <rect x="587.52" y="164.193696" width="233.28" height="207.292608"/>
+  </clipPath>
+ </defs>
+</svg>

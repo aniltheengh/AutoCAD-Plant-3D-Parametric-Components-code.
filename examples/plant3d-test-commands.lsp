@@ -44,7 +44,27 @@
 (testacpscript "AT_ELBOW90")
 (testacpscript "AT_ELBOW90" "OD" "60.3" "ID" "52.3" "BR" "90")
 
+; Hollow tee: run along X, branch along +Y; second form is a reducing tee.
+(testacpscript "AT_TEE")
+(testacpscript "AT_TEE" "OD2" "60.3" "ID2" "52.3" "M" "95")
+
+; Pipe cap: open end at X=0, 2:1 ellipsoidal head, crown at X=L.
+(testacpscript "AT_CAP")
+(testacpscript "AT_CAP" "OD" "60.3" "WT" "4" "L" "38")
+
+; Grooved coupling housing: ports at the pipe ends inside the housing.
+(testacpscript "AT_GROOVED_COUPLING")
+(testacpscript "AT_GROOVED_COUPLING" "PD" "60.3" "HD" "88" "HL" "45" "G" "3" "P" "22" "PH" "28" "BH" "11")
+
+; T-section pipe shoe below a pipe along X; anchor at the pipe centre.
+(testacpscript "AT_PIPE_SHOE")
+(testacpscript "AT_PIPE_SHOE" "PD" "60.3" "L" "150" "H" "80" "W" "90" "T" "8")
+
 ; Invalid examples: expect validation errors and no component geometry.
+(testacpscript "AT_TEE" "OD2" "168.3")
+(testacpscript "AT_CAP" "L" "20")
+(testacpscript "AT_GROOVED_COUPLING" "BH" "30")
+(testacpscript "AT_PIPE_SHOE" "H" "60")
 (testacpscript "AT_UBAND" "HD" "30")
 (testacpscript "AT_UBOLT" "C" "-1")
 (testacpscript "AT_BLIND_FLANGE" "N" "6")

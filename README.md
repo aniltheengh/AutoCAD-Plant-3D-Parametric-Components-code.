@@ -1,6 +1,6 @@
 # AutoCAD Plant 3D Parametric Components
 
-Eight editable Python examples, with dimensioned PNG and SVG reference images. All dimensions are in **millimetres**. The library includes a **flat strap U-band with drilled mounting feet** and a separate round U-bolt body.
+Twelve editable Python examples, with dimensioned PNG and SVG reference images. All dimensions are in **millimetres**. The library includes a **flat strap U-band with drilled mounting feet**, a separate round U-bolt body, a T-section pipe shoe, and a grooved (Victaulic-style) coupling housing.
 
 ![Flat strap U-band reference drawing](images/AT_UBAND.png)
 
@@ -12,18 +12,22 @@ These are source examples with geometric input checks. Plant 3D registration, so
 | --- | --- | --- | --- |
 | Flat strap U-band | [AT_UBAND.py](CustomScripts/AT_UBAND.py) | [PNG](images/AT_UBAND.png) / [SVG](images/AT_UBAND.svg) | Pipe OD, clearance, width, thickness, leg depth, foot projection, mounting holes |
 | Round U-bolt body | [AT_UBOLT.py](CustomScripts/AT_UBOLT.py) | [PNG](images/AT_UBOLT.png) / [SVG](images/AT_UBOLT.svg) | Pipe OD, clearance, rod diameter, leg depth |
+| T-section pipe shoe | [AT_PIPE_SHOE.py](CustomScripts/AT_PIPE_SHOE.py) | [PNG](images/AT_PIPE_SHOE.png) / [SVG](images/AT_PIPE_SHOE.svg) | Pipe OD, length, depth below pipe centre, base width, plate thickness |
+| Grooved coupling housing | [AT_GROOVED_COUPLING.py](CustomScripts/AT_GROOVED_COUPLING.py) | [PNG](images/AT_GROOVED_COUPLING.png) / [SVG](images/AT_GROOVED_COUPLING.svg) | Pipe OD, housing diameter and length, pipe-end gap, bolt pads and holes |
 | Drilled flat flange | [AT_FLANGE.py](CustomScripts/AT_FLANGE.py) | [PNG](images/AT_FLANGE.png) / [SVG](images/AT_FLANGE.svg) | Outside diameter, bore, thickness, bolt circle, holes |
 | Blind flange plate | [AT_BLIND_FLANGE.py](CustomScripts/AT_BLIND_FLANGE.py) | [PNG](images/AT_BLIND_FLANGE.png) / [SVG](images/AT_BLIND_FLANGE.svg) | Outside diameter, thickness, bolt circle, holes |
 | Concentric reducer | [AT_REDUCER.py](CustomScripts/AT_REDUCER.py) | [PNG](images/AT_REDUCER.png) / [SVG](images/AT_REDUCER.svg) | Outside and bore diameters at both ends, length |
 | Hollow 90-degree elbow | [AT_ELBOW90.py](CustomScripts/AT_ELBOW90.py) | [PNG](images/AT_ELBOW90.png) / [SVG](images/AT_ELBOW90.svg) | Outside diameter, bore, bend radius |
+| Straight tee, equal or reducing | [AT_TEE.py](CustomScripts/AT_TEE.py) | [PNG](images/AT_TEE.png) / [SVG](images/AT_TEE.svg) | Run and branch diameters and bores, centre-to-end lengths |
+| Ellipsoidal pipe cap | [AT_CAP.py](CustomScripts/AT_CAP.py) | [PNG](images/AT_CAP.png) / [SVG](images/AT_CAP.svg) | Outside diameter, wall thickness, length |
 | Hollow spacer | [AT_SPACER.py](CustomScripts/AT_SPACER.py) | [PNG](images/AT_SPACER.png) / [SVG](images/AT_SPACER.svg) | Outside diameter, bore, length |
 | Solid cylinder | [AT_CYLINDER.py](CustomScripts/AT_CYLINDER.py) | [PNG](images/AT_CYLINDER.png) / [SVG](images/AT_CYLINDER.svg) | Diameter, length |
 
-[Browse all eight image sheets](docs/GALLERY.md) or open the [overview image](images/component-gallery.jpg).
+[Browse all twelve image sheets](docs/GALLERY.md) or open the [overview image](images/component-gallery.jpg).
 
 ## Start with the U-band
 
-Copy the eight `.py` files from `CustomScripts` into your configured shared-content folder's `CPak Common\CustomScripts` directory, then follow [installation and testing](docs/INSTALLATION.md). Once registered, test in a scratch drawing:
+Copy the twelve `.py` files from `CustomScripts` into your configured shared-content folder's `CPak Common\CustomScripts` directory, then follow [installation and testing](docs/INSTALLATION.md). Once registered, test in a scratch drawing:
 
 ```lisp
 (arxload "PnP3dACPAdapter")

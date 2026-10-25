@@ -89,5 +89,54 @@
     "source_sha256": "50b442f4388964039bdad2e5ec3a691cb92d8b29ebf5c1feb077b72c0bb19ad2",
     "png": "AT_ELBOW90.png",
     "svg": "AT_ELBOW90.svg"
+  },
+  "AT_TEE": {
+    "defaults": {
+      "OD1": 114.3,
+      "ID1": 102.3,
+      "OD2": 114.3,
+      "ID2": 102.3,
+      "C": 105.0,
+      "M": 105.0
+    },
+    "source_sha256": "5a2495da44333402c92f815bf78a4a09b9d9f425d59baa705472f62199073b29",
+    "png": "AT_TEE.png",
+    "svg": "AT_TEE.svg"
+  },
+  "AT_CAP": {
+    "defaults": {
+      "OD": 114.3,
+      "WT": 6.0,
+      "L": 64.0
+    },
+    "source_sha256": "01c35bd5074b0b14e826c3e281d9b411a4381c04ef3d4540ea2a612c6fd2ddb2",
+    "png": "AT_CAP.png",
+    "svg": "AT_CAP.svg"
+  },
+  "AT_GROOVED_COUPLING": {
+    "defaults": {
+      "PD": 114.3,
+      "HD": 150.0,
+      "HL": 60.0,
+      "G": 3.0,
+      "P": 30.0,
+      "PH": 40.0,
+      "BH": 14.0
+    },
+    "source_sha256": "9955e5413adf5ce7e433264ea31fd56e7350158c6524a14f88e1b02ff694bdbd",
+    "png": "AT_GROOVED_COUPLING.png",
+    "svg": "AT_GROOVED_COUPLING.svg"
+  },
+  "AT_PIPE_SHOE": {
+    "defaults": {
+      "PD": 114.3,
+      "L": 200.0,
+      "H": 100.0,
+      "W": 120.0,
+      "T": 10.0
+    },
+    "source_sha256": "fd3e4c66d7ca46f5fe1aace7a18f5f6b1785e236656ec2b0f3953f3c4d634b7c",
+    "png": "AT_PIPE_SHOE.png",
+    "svg": "AT_PIPE_SHOE.svg"
   }
 }
