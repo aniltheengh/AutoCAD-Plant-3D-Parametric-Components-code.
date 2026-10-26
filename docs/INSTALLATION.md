@@ -2,9 +2,9 @@
 
 These scripts require **AutoCAD Plant 3D's embedded geometry libraries**. Ordinary Python can check their syntax, but cannot generate or validate their Plant 3D solids. No Plant 3D version has been runtime-tested for this library yet.
 
-## 1. Copy the twelve scripts
+## 1. Copy the thirteen scripts
 
-From the project folder, copy only the twelve `.py` files in `CustomScripts` into your configured Plant 3D shared-content folder:
+From the project folder, copy only the thirteen `.py` files in `CustomScripts` into your configured Plant 3D shared-content folder:
 
 ```text
 <Shared Content Folder>\CPak Common\CustomScripts\
@@ -60,4 +60,4 @@ The metadata and matching-name conventions are described in [Autodesk's tutorial
 | `AT_SPACER`, `AT_FLANGE` or `AT_ELBOW90` reports an `ID` error with default dimensions | Possible clash with the `ID` argument used by stock scripts; see [the API notes](COMPONENTS.md#coordinate-and-api-notes). |
 | Solid appears but catalog insertion or connections fail | Check the part family and port/end-type configuration independently of the geometry test. |
 
-The `images` folder contains documentation previews. This library does not claim that they are registered Spec Editor thumbnails. Only copy the twelve source scripts for the initial geometry test; keep the documents, test recorder and preview generator outside Plant 3D's content folder.
+The `images` folder contains documentation previews. This library does not claim that they are registered Spec Editor thumbnails. Only copy the thirteen source scripts for the initial geometry test; keep the documents, test recorder and preview generator outside Plant 3D's content folder.

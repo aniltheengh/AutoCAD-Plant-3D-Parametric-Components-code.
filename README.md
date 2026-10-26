@@ -1,6 +1,6 @@
 # AutoCAD Plant 3D Parametric Components
 
-Twelve editable Python examples, with dimensioned PNG and SVG reference images. All dimensions are in **millimetres**. The library includes a **flat strap U-band with drilled mounting feet**, a separate round U-bolt body, a T-section pipe shoe, and a grooved (Victaulic-style) coupling housing.
+Thirteen editable Python examples, with dimensioned PNG and SVG reference images. All dimensions are in **millimetres**. The library includes a **flat strap U-band with drilled mounting feet**, a separate round U-bolt body, a T-section pipe shoe, a grooved (Victaulic-style) coupling housing, and a gasket that also draws its flange bolts and nuts.
 
 ![Flat strap U-band reference drawing](images/AT_UBAND.png)
 
@@ -16,6 +16,7 @@ These are source examples with geometric input checks. Plant 3D registration, so
 | Grooved coupling housing | [AT_GROOVED_COUPLING.py](CustomScripts/AT_GROOVED_COUPLING.py) | [PNG](images/AT_GROOVED_COUPLING.png) / [SVG](images/AT_GROOVED_COUPLING.svg) | Pipe OD, housing diameter and length, pipe-end gap, bolt pads and holes |
 | Drilled flat flange | [AT_FLANGE.py](CustomScripts/AT_FLANGE.py) | [PNG](images/AT_FLANGE.png) / [SVG](images/AT_FLANGE.svg) | Outside diameter, bore, thickness, bolt circle, holes |
 | Blind flange plate | [AT_BLIND_FLANGE.py](CustomScripts/AT_BLIND_FLANGE.py) | [PNG](images/AT_BLIND_FLANGE.png) / [SVG](images/AT_BLIND_FLANGE.svg) | Outside diameter, thickness, bolt circle, holes |
+| Gasket with bolts and nuts ([guide](docs/GSKMB.md)) | [GSKMB.py](CustomScripts/GSKMB.py) | [PNG](images/GSKMB.png) / [SVG](images/GSKMB.svg) | Gasket diameters and thickness, bolt count, bolt circle, bolt size and length, flange thickness |
 | Concentric reducer | [AT_REDUCER.py](CustomScripts/AT_REDUCER.py) | [PNG](images/AT_REDUCER.png) / [SVG](images/AT_REDUCER.svg) | Outside and bore diameters at both ends, length |
 | Hollow 90-degree elbow | [AT_ELBOW90.py](CustomScripts/AT_ELBOW90.py) | [PNG](images/AT_ELBOW90.png) / [SVG](images/AT_ELBOW90.svg) | Outside diameter, bore, bend radius |
 | Straight tee, equal or reducing | [AT_TEE.py](CustomScripts/AT_TEE.py) | [PNG](images/AT_TEE.png) / [SVG](images/AT_TEE.svg) | Run and branch diameters and bores, centre-to-end lengths |
@@ -23,11 +24,11 @@ These are source examples with geometric input checks. Plant 3D registration, so
 | Hollow spacer | [AT_SPACER.py](CustomScripts/AT_SPACER.py) | [PNG](images/AT_SPACER.png) / [SVG](images/AT_SPACER.svg) | Outside diameter, bore, length |
 | Solid cylinder | [AT_CYLINDER.py](CustomScripts/AT_CYLINDER.py) | [PNG](images/AT_CYLINDER.png) / [SVG](images/AT_CYLINDER.svg) | Diameter, length |
 
-[Browse all twelve image sheets](docs/GALLERY.md) or open the [overview image](images/component-gallery.jpg).
+[Browse all thirteen image sheets](docs/GALLERY.md) or open the [overview image](images/component-gallery.jpg).
 
 ## Start with the U-band
 
-Copy the twelve `.py` files from `CustomScripts` into your configured shared-content folder's `CPak Common\CustomScripts` directory, then follow [installation and testing](docs/INSTALLATION.md). Once registered, test in a scratch drawing:
+Copy the thirteen `.py` files from `CustomScripts` into your configured shared-content folder's `CPak Common\CustomScripts` directory, then follow [installation and testing](docs/INSTALLATION.md). Once registered, test in a scratch drawing:
 
 ```lisp
 (arxload "PnP3dACPAdapter")

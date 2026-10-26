@@ -2,7 +2,7 @@
 
 All dimensions are in **millimetres**. These are original learning examples with illustrative defaults; no JIS, ASME, pressure class, material, or load rating is implied. Their solids, registration, and catalog behavior still require testing inside Plant 3D.
 
-See the [image gallery](GALLERY.md) for all twelve dimensioned reference sheets. The flat strap U-band is documented below under `AT_UBAND`; the round U-bolt is a separate part.
+See the [image gallery](GALLERY.md) for all thirteen dimensioned reference sheets. The flat strap U-band is documented below under `AT_UBAND`; the round U-bolt is a separate part.
 
 ## AT_CYLINDER — solid cylinder
 
@@ -185,6 +185,12 @@ The two bolt pads are at +Y and -Y, centred on X=`HL/2` and as long as the housi
 | `T` | Web and base-plate thickness | 10 | Less than `W` and `PD` |
 
 The web is built from the pipe centre down to Z=-H. Subtracting a pipe cylinder then shapes its top to the pipe radius, the same technique as Plant 3D's stock shoe `CSGB000`. The base plate spans Z=-H to Z=-H+T, below the pipe. The shoe is not load-rated, and has no slots, hold-downs, stiffeners or weld details.
+
+## GSKMB - gasket with bolts and nuts
+
+[Source](../CustomScripts/GSKMB.py) | [Image](../images/GSKMB.png) | [Guide](GSKMB.md). Group `Gasket`, first port end type `FL`. Port 1 is at X=0 pointing -X and port 2 is at X=`L` pointing +X. The gasket ring runs from X=0 to X=`L`. Each bolt's head sits on the back face of flange 1 (X=-T), and its nut on the back face of flange 2 (X=L+T). Bolts straddle the centrelines: the first is at `180/N` degrees.
+
+`D`, `D1`, `L`, `K`, `BD`, `BL` and `T` must be positive and finite, and `D1 < D`. `N` is an `INT`: `0` draws the gasket only; otherwise it must be a whole number of at least 2. With bolts, `K > D`, `BL > 2T + L`, and neighbouring heads and nuts (`1.6 BD` across) must not overlap: `K sin(pi/N) > 1.6 BD`. See the [guide](GSKMB.md) for the parameter table, catalog use and limitations.
 
 ## Coordinate and API notes
 

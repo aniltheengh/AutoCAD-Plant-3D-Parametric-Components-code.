@@ -138,5 +138,20 @@
     "source_sha256": "fd3e4c66d7ca46f5fe1aace7a18f5f6b1785e236656ec2b0f3953f3c4d634b7c",
     "png": "AT_PIPE_SHOE.png",
     "svg": "AT_PIPE_SHOE.svg"
+  },
+  "GSKMB": {
+    "defaults": {
+      "D": 96.0,
+      "D1": 61.0,
+      "L": 3.0,
+      "N": 4,
+      "K": 120.0,
+      "BD": 16.0,
+      "BL": 55.0,
+      "T": 16.0
+    },
+    "source_sha256": "94b81144d515f2bc293ef15e7d9c1d269cb2996e6b71782903148595f5d7a024",
+    "png": "GSKMB.png",
+    "svg": "GSKMB.svg"
   }
 }

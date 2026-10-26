@@ -1,6 +1,6 @@
 # Component image gallery
 
-All twelve sheets use source-code defaults in millimetres. They are analytical reference illustrations, not Plant 3D renders or manufacturing drawings. The pipe outline in the clamp, shoe and coupling sheets is a dashed fit reference; those scripts do not add a pipe solid.
+All thirteen sheets use source-code defaults in millimetres. They are analytical reference illustrations, not Plant 3D renders or manufacturing drawings. The pipe outline in the clamp, shoe and coupling sheets is a dashed fit reference; those scripts do not add a pipe solid.
 
 ## Flat strap U-band
 
@@ -37,6 +37,12 @@ All twelve sheets use source-code defaults in millimetres. They are analytical r
 [Python source](../CustomScripts/AT_BLIND_FLANGE.py) | [Editable SVG](../images/AT_BLIND_FLANGE.svg)
 
 ![Blind flange plate](../images/AT_BLIND_FLANGE.png)
+
+## Gasket with bolts and nuts
+
+[Python source](../CustomScripts/GSKMB.py) | [Editable SVG](../images/GSKMB.svg) | [Guide](GSKMB.md)
+
+![Gasket with bolts and nuts](../images/GSKMB.png)
 
 ## Concentric reducer
 

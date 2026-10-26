@@ -60,7 +60,13 @@
 (testacpscript "AT_PIPE_SHOE")
 (testacpscript "AT_PIPE_SHOE" "PD" "60.3" "L" "150" "H" "80" "W" "90" "T" "8")
 
+; Gasket with machine bolts and nuts; "N" "0" draws the gasket only.
+(testacpscript "GSKMB")
+(testacpscript "GSKMB" "N" "8" "K" "180" "BD" "20" "BL" "70" "T" "20")
+(testacpscript "GSKMB" "N" "0")
+
 ; Invalid examples: expect validation errors and no component geometry.
+(testacpscript "GSKMB" "BL" "30")
 (testacpscript "AT_TEE" "OD2" "168.3")
 (testacpscript "AT_CAP" "L" "20")
 (testacpscript "AT_GROOVED_COUPLING" "BH" "30")

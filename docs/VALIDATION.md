@@ -2,7 +2,9 @@
 
 ## Offline checks — 2026-10-26
 
-Environment: Windows, Python 3.14.3, same command as below. Result: **52 test methods passed** (49 geometry/metadata checks and 3 image/documentation checks) for the twelve components.
+Environment: Windows, Python 3.14.3, same command as below. Result: **57 test methods passed** (54 geometry/metadata checks and 3 image/documentation checks) for the thirteen components.
+
+`GSKMB` (gasket with bolts and nuts) joined the library with input checks added before any geometry. Its tests cover the gasket ring and ports, bolt positions straddling the centrelines, heads and nuts on the flange back faces, the `N=0` gasket-only case, the header's eight-bolt example, and rejection of bad bolt counts, a bolt circle inside the gasket, short bolts and overlapping heads.
 
 Added checks cover the tee's run/branch placement, bores and three ports; the cap's head height, crown thickness and open cavity; the coupling's inset ports, pad-to-housing chord and bolt-hole clearances; and the shoe's web seat and base-plate depth. The new scripts were also deliberately broken in eight ways, two per script (wrong branch direction, short bore cutters, missing crown wall, detached pads, holes cutting the housing, a misplaced base plate, a loosened validation check); the tests failed every time. Every command in [the command reference](../examples/plant3d-test-commands.lsp) was run through the recorder: the valid examples build and the invalid ones are rejected. The parameter check now reads each parameter's declared type (`LENGTH0` may be zero), rather than special-casing the name `C`.
 
@@ -28,7 +30,7 @@ No Plant 3D release is claimed as runtime-validated. Complete these checks in a 
 
 | Check | Current result |
 | --- | --- |
-| Register all twelve scripts with no errors | Not run |
+| Register all thirteen scripts with no errors | Not run |
 | Generate solids with defaults and the changed-size examples | Not run |
 | Measure diameters, lengths, bore openings, and bolt-hole placement | Not run |
 | Verify error reporting for the deliberately invalid examples | Not run |
@@ -36,7 +38,7 @@ No Plant 3D release is claimed as runtime-validated. Complete these checks in a 
 | Insert into a test spec/model and verify applicable connections | Not run |
 | Verify applicable isometric symbol and BOM properties | Not run |
 
-The cylinder, clamps and shoe have one support/reference anchor; the blind flange and cap have one face reference. The spacer, drilled flange, reducer, elbow and coupling have two reference points, and the tee has three. Catalog properties determine how those points are used in the intended part family.
+The cylinder, clamps and shoe have one support/reference anchor; the blind flange and cap have one face reference. The spacer, drilled flange, reducer, elbow, coupling and bolted gasket have two reference points, and the tee has three. Catalog properties determine how those points are used in the intended part family.
 
 ## Record a runtime test here
 

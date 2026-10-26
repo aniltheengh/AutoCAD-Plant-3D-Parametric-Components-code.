@@ -18,7 +18,8 @@ from unittest.mock import patch
 SCRIPT_DIR = Path(__file__).resolve().parents[1] / "CustomScripts"
 COMPONENT_NAMES = ("AT_CYLINDER", "AT_SPACER", "AT_FLANGE", "AT_BLIND_FLANGE",
                    "AT_UBAND", "AT_UBOLT", "AT_REDUCER", "AT_ELBOW90",
-                   "AT_TEE", "AT_CAP", "AT_GROOVED_COUPLING", "AT_PIPE_SHOE")
+                   "AT_TEE", "AT_CAP", "AT_GROOVED_COUPLING", "AT_PIPE_SHOE",
+                   "GSKMB")
 
 
 class SessionRecorder:
@@ -51,6 +52,18 @@ class PrimitiveRecorder:
         def rotate(vector):
             x, y, z = vector
             return (c * x + s * z, y, -s * x + c * z)
+
+        self.origin = rotate(self.origin)
+        self.axis = rotate(self.axis)
+        return self
+
+    def rotateX(self, degrees):
+        radians = math.radians(degrees)
+        c, s = math.cos(radians), math.sin(radians)
+
+        def rotate(vector):
+            x, y, z = vector
+            return (x, c * y - s * z, s * y + c * z)
 
         self.origin = rotate(self.origin)
         self.axis = rotate(self.axis)
@@ -131,6 +144,7 @@ def load_component(name):
     primitives.ELLIPSOIDHEAD2 = EllipsoidHeadRecorder
     custom = types.ModuleType("varmain.custom")
     custom.LENGTH, custom.LENGTH0, custom.ENUM = "LENGTH", "LENGTH0", "ENUM"
+    custom.INT = "INT"
 
     def activate(**metadata):
         def decorate(function):
@@ -199,7 +213,8 @@ class ComponentTests(unittest.TestCase):
                 dimensions = set(inspect.signature(function).parameters) - {"s", "kw"}
                 declared = set()
                 for metadata in function.parameters:
-                    declared.update(k for k, v in metadata.items() if v in ("LENGTH", "LENGTH0", "ENUM"))
+                    declared.update(k for k, v in metadata.items()
+                                    if v in ("LENGTH", "LENGTH0", "ENUM", "INT"))
                 self.assertEqual(declared, dimensions)
                 self.assertEqual(function.metadata["LengthUnit"], "mm")
 
@@ -624,6 +639,47 @@ class ComponentTests(unittest.TestCase):
                            {"T": 120, "W": 130, "H": 300}):
             with self.subTest(parameters=parameters):
                 self.assert_rejected_without_geometry("AT_PIPE_SHOE", **parameters)
+
+    def test_gskmb_gasket_ring_and_face_ports(self):
+        session = self.run_component("GSKMB")
+        ring = session.objects[0]
+        self.assertEqual((ring.radius, ring.bore_radius, ring.length), (48, 30.5, 3))
+        self.assert_vector_close(ring.axis, (1, 0, 0))
+        self.assertEqual(session.ports, [((0, 0, 0), (-1, 0, 0)), ((3, 0, 0), (1, 0, 0))])
+
+    def test_gskmb_bolts_straddle_centrelines_with_head_and_nut_on_flange_backs(self):
+        ring = self.run_component("GSKMB").objects[0]
+        self.assertEqual(len(ring.joined), 12)
+        for index in range(4):
+            shank, head, nut = ring.joined[3 * index:3 * index + 3]
+            angle = math.radians(45 + 90 * index)
+            for part in (shank, head, nut):
+                self.assert_vector_close(part.axis, (1, 0, 0))
+                self.assert_vector_close(part.origin[1:], (60 * math.cos(angle), 60 * math.sin(angle)))
+            self.assertEqual((shank.radius, shank.length), (8, 55))
+            self.assertAlmostEqual(shank.origin[0], -16)
+            self.assertAlmostEqual(head.origin[0] + head.length, -16)
+            self.assertAlmostEqual(nut.origin[0], 3 + 16)
+            # The shank reaches into its nut, so each bolt is one connected solid.
+            self.assertGreater(shank.origin[0] + shank.length, nut.origin[0])
+
+    def test_gskmb_zero_bolts_draws_gasket_only(self):
+        # With no bolts, the bolt-circle checks do not apply.
+        session = self.run_component("GSKMB", N=0, K=50)
+        self.assertEqual(len(session.objects), 1)
+        self.assertEqual(len(session.ports), 2)
+
+    def test_gskmb_header_example_builds_eight_bolts(self):
+        ring = self.run_component("GSKMB", N=8, K=180, BD=20, BL=70, T=20).objects[0]
+        self.assertEqual(len(ring.joined), 24)
+        self.assertAlmostEqual(math.hypot(*ring.joined[0].origin[1:]), 90)
+
+    def test_gskmb_rejects_bad_counts_and_bolting(self):
+        for parameters in ({"N": 1}, {"N": 2.5}, {"N": -4}, {"N": "four"},
+                           {"N": float("inf")}, {"N": float("nan")}, {"D1": 96},
+                           {"K": 96}, {"BL": 35}, {"N": 24}):
+            with self.subTest(parameters=parameters):
+                self.assert_rejected_without_geometry("GSKMB", **parameters)
 
     def test_new_components_erase_all_temporary_objects(self):
         for name in COMPONENT_NAMES[3:]:

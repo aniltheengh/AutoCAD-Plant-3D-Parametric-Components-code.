@@ -277,6 +277,38 @@ def draw_shoe(ax, detail, p):
     frame(detail, (-length / 2 - 25, length / 2 + 25, -h - 45, r + 20), "Side view / X to the right")
 
 
+def draw_gasket(ax, detail, p):
+    d, d1, gl, n, k, bd, bl, t = (p[k] for k in ("D", "D1", "L", "N", "K", "BD", "BL", "T"))
+    head_h, nut_h, hex_r = 0.65 * bd, 0.80 * bd, 0.80 * bd
+    reach = k / 2 + hex_r + 10
+    # Dashed flanges either side; the script draws only the gasket and bolting.
+    for x0 in (-t, gl):
+        ax.add_patch(Rectangle((x0, -reach), t, 2 * reach, fill=False, edgecolor=GREY, ls="--", lw=1))
+    for sign in (-1, 1):
+        rect(ax, 0, d1 / 2 if sign > 0 else -d / 2, gl, (d - d1) / 2)
+        y = sign * k / 2
+        rect(ax, -t, y - bd / 2, bl, bd)
+        rect(ax, -t - head_h, y - hex_r, head_h, 2 * hex_r)
+        rect(ax, gl + t, y - hex_r, nut_h, 2 * hex_r)
+    ax.plot([-t - head_h - 12, -t + bl + 12], [0, 0], "-.", color=GREY, lw=0.7)
+    horizontal(ax, -t, -t + bl, -reach - 12, "BL = %g" % bl)
+    horizontal(ax, -t, 0, reach + 4, "T = %g each side" % t)
+    vertical(ax, -t - head_h - 16, -k / 2, k / 2, "K = %g" % k)
+    ax.annotate("Gasket L = %g" % gl, (gl / 2, d / 2 - 2), (gl + t + nut_h + 6, d / 2 + 4),
+                color=DIM, arrowprops={"arrowstyle": "->", "color": DIM})
+    frame(ax, (-t - head_h - 35, -t + bl + 30, -reach - 32, reach + 26), "Section through two opposite bolts / X to the right")
+    circle(detail, 0, 0, d / 2)
+    circle(detail, 0, 0, d1 / 2, facecolor="white")
+    circle(detail, 0, 0, k / 2, facecolor="none", edgecolor=GREY, linestyle="--")
+    for i in range(n):
+        angle = math.pi / n + 2 * math.pi * i / n
+        circle(detail, k / 2 * math.cos(angle), k / 2 * math.sin(angle), hex_r)
+        circle(detail, k / 2 * math.cos(angle), k / 2 * math.sin(angle), bd / 2, facecolor="white")
+    detail.text(0, 0, "D = %g\nD1 = %g" % (d, d1), ha="center", va="center", color=INK)
+    detail.text(0, -reach - 8, "%g bolts, BD = %g, on K = %g" % (n, bd, k), ha="center", color=INK)
+    frame(detail, (-reach - 8, reach + 8, -reach - 22, reach + 8), "Face view / bolts straddle the centrelines")
+
+
 TITLES = {
     "AT_UBAND": ("Flat strap U-band", "Semicircular crown, straight legs and two drilled feet. Square foot transitions; no bend allowances."),
     "AT_UBOLT": ("Round U-bolt body", "Round rod with a semicircular crown. Smooth legs; threads, nuts and washers are not modelled."),
@@ -290,6 +322,7 @@ TITLES = {
     "AT_CAP": ("Ellipsoidal pipe cap", "Straight skirt and 2:1 ellipsoidal head; the crown is as thick as the wall."),
     "AT_GROOVED_COUPLING": ("Grooved coupling housing", "Housing envelope with two bolt pads. Keys, gasket, pipe grooves and bolts are not modelled."),
     "AT_PIPE_SHOE": ("T-section pipe shoe", "Web cut to the pipe radius on a flat base plate. The dashed pipe is a fit reference only."),
+    "GSKMB": ("Gasket with bolts and nuts", "Flat gasket with machine bolts; heads and nuts are round stand-ins for hex. Dashed flanges are references only."),
 }
 
 
@@ -316,6 +349,8 @@ def render(name, p):
         draw_coupling(ax, detail, p)
     elif name == "AT_PIPE_SHOE":
         draw_shoe(ax, detail, p)
+    elif name == "GSKMB":
+        draw_gasket(ax, detail, p)
     elif name in ("AT_FLANGE", "AT_BLIND_FLANGE"):
         ring_face(ax, p["OD"], p.get("ID", 0), p["BCD"], p["HD"], p["N"])
         straight(detail, p["OD"], p["T"], p.get("ID", 0), label="T")
